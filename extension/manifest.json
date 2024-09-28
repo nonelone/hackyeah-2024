@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "Hello World Extension",
+    "version": "1.0",
+    "description": "A simple Hello World extension",
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "permissions": ["tabs"],
+    "icons": {
+        "16": "aegis.png",
+        "48": "aegis.png",
+        "128": "aegis.png"
+    }
+}  
