@@ -8,10 +8,11 @@ def api():
     if request.method == 'POST':
         if request.form['url'] is not None:
             requested_url = request.form['url']
+            print(requested_url)
             url = urlparse(requested_url)
             if url.path == "amazin.cum":
-                return redirect("/protected")
-            return url
+                return "SUS" #redirect("/protected")
+            return str(url)
         else: abort(503)
     elif request.method == 'GET':
         return '<title>API</title><h1>For API usage, dummy!</h1>'

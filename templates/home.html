@@ -9,11 +9,11 @@
 <body>
     <div class="container mt-5"></div>
         <h1 class="d-flex justify-content-center">Shop Url Checker</h1>
-        <form method="POST">
+        <form method="POST" action="{{ url_for('api.api') }}">
             <div class="mb-3">
-                <input type="text" class="form-control" id="shop-url" name="text" placeholder="Enter shop url">
+                <input type="text" class="form-control" name="url" placeholder="Enter shop url">
             </div>
-            <button type="submit" class="btn btn-primary d-flex justify-content-center">Check</button>
+            <input type="submit" class="btn btn-primary d-flex justify-content-center">Check</button>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
