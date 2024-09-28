@@ -1,81 +1,63 @@
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy import ForeignKey
-from sqlalchemy import select, insert
-from sqlalchemy import create_engine
-from sqlalchemy import Table, Column, Integer, String, text
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-#engine definition.
-engine = create_engine("sqlite+pysqlite:///urls.db", echo=True)
+import Levenshtein
 
-class Base(DeclarativeBase):
-    pass
+import os
 
+class Base(DeclarativeBase): pass
 
-class Service(Base):
-    __tablename__ = "service"
+db = SQLAlchemy(model_class=Base)
 
-    id: Mapped[int] = mapped_column(primary_key=True) #todo
-    name = mapped_column(String(100), unique=True) #todo
-    description = mapped_column(String(10)) #todo
+class Service(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(unique=True)
 
+class ServiceUrl(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    url: Mapped[str] = mapped_column(unique=True)
 
-    def __repr__(self) -> str:
-        return f"Service(name={self.name!r}, id={self.id!r})"
+class SuspiciousUrl(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    url: Mapped[str] = mapped_column(unique=True)
+    evil_factor: Mapped[int] = mapped_column()
 
+#service_table = db.Table(
+#    sa.Column("provider_id", sa.ForeignKey(Service.id), primary_key=True),
+#    sa.Column("url_id", sa.ForeignKey(ServiceUrl.id), primary_key=True),
+#)
 
-class Url(Base):
-    __tablename__ = "url_string"
+def verify_url(url):
+    url = url.replace("https://","")
+    vile_shit = ServiceUrl.query.all()
+    results = []
+    for contested_url in vile_shit:
+        contested_url = (contested_url.url).replace("\n","")
+        distance = Levenshtein.distance(url, contested_url)
+        if distance < 2 and distance != 0:
+            results.append(f"{contested_url} @ {distance}")
+            return False
+    return True
 
-    url_id: Mapped[int] = mapped_column(String(512), primary_key=True) #todo
-    service_id = mapped_column(ForeignKey("service.id"))
+def import_websites_from_csv(path):
+    with open(path) as file:
+        while line := file.readline():
+            new_url = ServiceUrl(url=line)
+            db.session.add(new_url)
 
-    def __repr__(self) -> str:
-        return f"Url(url_id={self.url_id!r}, service_id={self.service_id!r})"
+    db.session.commit()
 
+def report_url(url):
+    if db.session.query(SuspiciousUrl).filter_by(url = url).first() is not None:
+        db.session.query(SuspiciousUrl).filter_by(url = url).update({'evil_factor': SuspiciousUrl.evil_factor + 1})
+    else:
+        evil_url = SuspiciousUrl(url=url, evil_factor=1)
+        db.session.add(evil_url)
+    db.session.commit()
 
-#Create models.
-Base.metadata.create_all(engine)
-
-def execute_and_print_query(query):
-    with engine.connect() as conn:
-        for row in conn.execute(query):
-            print(row)
-        conn.commit()
-
-def execute_query(query):
-    with engine.connect() as conn:
-        conn.execute(query)
-        conn.commit()
-
-def print_services():
-    stmt = select(Service)
-    print(stmt)
-    execute_and_print_query(stmt)
-
-def print_urls():
-    stmt = select(Url)
-    print(stmt)
-    execute_and_print_query(stmt)
-
-def insert_service(name : str, description : str ):
-    """Returns primary key of an inserted service."""
-    stmt = insert(Service).values(name=name, description=description).prefix_with('OR IGNORE')
-    with engine.connect() as conn:
-        conn.execute(stmt)
-        cursor = conn.execute(text("SELECT last_insert_rowid()"))
-        key = cursor.first()[0] #Get service's id from cursor object.
-        print(key)
-        conn.commit()
-
-        return key #Return id of an inserted service.
-
-def insert_url(url : str, service_id: int):
-    stmt = insert(Url).values(url_id=url, service_id=service_id).prefix_with('OR IGNORE')
-    print(stmt)
-    execute_query(stmt)
-
-def select_urls_for_service(service_id: int):
-    stmt = select(Url).where(Url.service_id == service_id)
-    execute_and_print_query(stmt)
+def init_database():
+    if os.path.isfile('instance/db'): print("Database found")
+    else: 
+        db.create_all()
+        import_websites_from_csv("cloudflare-radar_top-1000-domains_20240916-20240923.csv")
+        print("Created new database")

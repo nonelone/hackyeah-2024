@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+Suspicious websites
+{% endblock %}
+
+{% block body %}
+{% if suslist is not none %}
+  <ol>
+  {% for suspicious in suslist %}
+  <li>{{ suspicious.url }}, reported {{ suspicious.evil_factor }} times.</li>  
+  {% endfor %}
+  </ol>
+{% else %}
+  Internal Error
+{% endif %}
+{% endblock %}
