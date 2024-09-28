@@ -32,12 +32,20 @@ def verify_url(url):
     vile_shit = ServiceUrl.query.all()
     results = []
     for contested_url in vile_shit:
-        distance = Levenshtein.distance(url, contested_url.url)
+        contested_url = (contested_url.url).replace("\n","")
+        distance = Levenshtein.distance(url, contested_url)
         if distance < 2 and distance != 0:
-            results.append(f"{contested_url.url} @ {distance}")
+            results.append(f"{contested_url} @ {distance}")
             return False
     return True
 
+def import_websites_from_csv(path):
+    with open(path) as file:
+        while line := file.readline():
+            new_url = ServiceUrl(url=line)
+            db.session.add(new_url)
+
+    db.session.commit()
 
 def report_url(url):
     if db.session.query(SuspiciousUrl).filter_by(url = url).first() is not None:
@@ -51,4 +59,5 @@ def init_database():
     if os.path.isfile('instance/db'): print("Database found")
     else: 
         db.create_all()
+        import_websites_from_csv("cloudflare-radar_top-1000-domains_20240916-20240923.csv")
         print("Created new database")

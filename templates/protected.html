@@ -38,6 +38,7 @@
         {% if reason == "dangerous" %}
           <img src="{{url_for('static', filename='insecure.png')}}" class="card-img-top" style="max-width: 50%">
           <h5 class="card-title">Dangerous Website!</h5>
+          <button onclick="window.location.href = {{ url_for('website.home') }}" class="btn btn-secondary mt-2">Go to home page</button>
         {% endif %}
 
         {% if reason == "success" and target_url is not none and target_url != "" %}
