@@ -6,11 +6,11 @@ Suspicious websites
 
 {% block body %}
 {% if suslist is not none %}
-  <ul>
+  <ol>
   {% for suspicious in suslist %}
-  
+  <li>{{ suspicious.url }}, reported {{ suspicious.evil_factor }} times.</li>  
   {% endfor %}
-  </ul>
+  </ol>
 {% else %}
   Internal Error
 {% endif %}

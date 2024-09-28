@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
+import Levenshtein
+
 import os
 
 class Base(DeclarativeBase): pass
@@ -24,6 +26,17 @@ class SuspiciousUrl(db.Model):
 #    sa.Column("provider_id", sa.ForeignKey(Service.id), primary_key=True),
 #    sa.Column("url_id", sa.ForeignKey(ServiceUrl.id), primary_key=True),
 #)
+
+def verify_url(url):
+    url = url.replace("https://","")
+    vile_shit = ServiceUrl.query.all()
+    results = []
+    for contested_url in vile_shit:
+        distance = Levenshtein.distance(url, contested_url.url)
+        if distance < 2 and distance != 0:
+            results.append(f"{contested_url.url} @ {distance}")
+            return False
+    return True
 
 
 def report_url(url):

@@ -11,6 +11,9 @@
     {% if reason == "dangerous" %}
       Dangerous Website!
     {% endif %}
+    {% if reason == "success" %}
+      Verified! Redirecting soon...
+    {% endif %}
   {% else %}
     Error
   {% endif %}
@@ -36,6 +39,17 @@
           <img src="{{url_for('static', filename='insecure.png')}}" class="card-img-top" style="max-width: 50%">
           <h5 class="card-title">Dangerous Website!</h5>
         {% endif %}
+
+        {% if reason == "success" and target_url is not none and target_url != "" %}
+          <img src="{{url_for('static', filename='secure.png')}}" class="card-img-top" style="max-width: 50%">
+          <h5 class="card-title">Website Verified! Redirecting now...</h5>
+          <script>
+            setTimeout(function() {
+              window.location.href = '{{ target_url }}';
+            }, 1000);
+          </script>
+        {% endif %}
+
       {% endif %}
             </div>
         </div>
