@@ -22,8 +22,4 @@ def protected(reason):
 def suspicious_url():
     res = "<ul>"
     suslist = db.session.query(SuspiciousUrl).all()
-    for entry in suslist:
-        res.join(f"<li>URL: ${entry.url}, scare_factor: ${entry.evil_factor}</li>")
-
-    res.join("</ul>")
-    return res
+    return render_template("suspicious.html", suslist=suslist)

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+Suspicious websites
+{% endblock %}
+
+{% block body %}
+{% if suslist is not none %}
+  <ul>
+  {% for suspicious in suslist %}
+  
+  {% endfor %}
+  </ul>
+{% else %}
+  Internal Error
+{% endif %}
+{% endblock %}
