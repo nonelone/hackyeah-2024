@@ -1,6 +1,6 @@
 //Set variable holding url for api
-var base_url = "http://localhost:3000";
-var api_url = base_url + "/extension_api";
+var base_url = "http://145.239.93.49:5000";
+var api_url = base_url + "/api";
 
 //give function to check-page button
 document.getElementById('check-page').addEventListener('click', function() {
@@ -18,9 +18,9 @@ function sendUrl(url) {
     fetch(api_url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/x-www-form-urlencoded' // lub 'text/plain' w zależności od API
         },
-        body: JSON.stringify({url: url})
+        body: `url=${encodeURIComponent(url)}`
     }).then(response => response.text())
     .then(data => {
         //possible data is insecure / bad_protocol / dangerous / success
