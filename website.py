@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, request
+from flask import Blueprint, abort, render_template, request
 
 website_blueprint = Blueprint('website', __name__)
 
@@ -7,4 +7,4 @@ def home():
     if request.method == 'POST':
         return '404'
     else:
-        return "Welcome home!"
+        return render_template('home.html')
