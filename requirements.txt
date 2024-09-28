@@ -3,3 +3,4 @@ flask_sqlalchemy
 python-whois
 requests
 python-Levenshtein
+flask-cors
