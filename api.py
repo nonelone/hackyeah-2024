@@ -1,6 +1,8 @@
 from flask import Blueprint, abort, request, redirect, flash, url_for
 from urllib.parse import urlparse, urlunparse
 
+import requests
+
 def check_url(url):
     return True
 
@@ -11,14 +13,15 @@ def api():
     if request.method == 'POST':
         if request.form['url'] is not None:
             requested_url = request.form['url']
-            print(requested_url)
             url = urlparse(requested_url)
             if url.scheme == "http":
-                try: # try to redirect to a secure version of the website
-                    new_url = url._replace(scheme="https")
-                    return redirect(urlunparse(new_url))
-                except: # mark as insecure if redirection is impossible
-                    return redirect(url_for('website.protected', reason="insecure"))
+                new_url = urlunparse(url._replace(scheme="https"))
+                try:
+                    with requests.get(new_url) as r:
+                        if r.status_code == 200:
+                            return redirect((new_url))
+                except: pass
+                return redirect(url_for('website.protected', reason="insecure"))
             elif url.scheme != "https":
                 return redirect(url_for('website.protected', reason="bad_protocol"))
             else:
