@@ -35,4 +35,7 @@ def report_url(url):
     db.session.commit()
 
 def init_database():
-    print(db.session.query(SuspiciousUrl).count())
+    if os.path.isfile('instance/db'): print("Database found")
+    else: 
+        db.create_all()
+        print("Created new database")
