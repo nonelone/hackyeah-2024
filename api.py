@@ -1,11 +1,18 @@
-from flask import Blueprint, abort, request
+from flask import Blueprint, abort, request, redirect
+from urllib.parse import urlparse
 
 api_blueprint = Blueprint('api', __name__)
 
 @api_blueprint.route("/api", methods=["GET", "POST"])
 def api():
     if request.method == 'POST':
-        return '404'
+        if request.form['url'] is not None:
+            requested_url = request.form['url']
+            url = urlparse(requested_url)
+            if url.path == "amazin.cum":
+                return redirect("/protected")
+            return url
+        else: abort(503)
     elif request.method == 'GET':
         return '<title>API</title><h1>For API usage, dummy!</h1>'
     abort(403)
