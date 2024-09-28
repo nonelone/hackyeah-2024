@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, request, redirect, render_template
+from flask import Blueprint, abort, request, redirect, render_template, flash
 
 website_blueprint = Blueprint('website', __name__)
 
@@ -9,9 +9,9 @@ def home():
     else:
         return render_template('home.html')
 
-@website_blueprint.route("/protected", methods=["GET", "POST"])
-def protected():
+@website_blueprint.route("/protected/<reason>", methods=["GET", "POST"])
+def protected(reason):
     if request.method == 'GET':
-        return redirect("/")
+        return render_template('protected.html', reason=reason)
     else:
         return "AMOGUS"

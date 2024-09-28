@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, request, redirect
+from flask import Blueprint, abort, request, redirect, flash, url_for
 from urllib.parse import urlparse
 
 api_blueprint = Blueprint('api', __name__)
@@ -10,9 +10,12 @@ def api():
             requested_url = request.form['url']
             print(requested_url)
             url = urlparse(requested_url)
-            if url.path == "amazin.cum":
-                return "SUS" #redirect("/protected")
-            return str(url)
+            if url.scheme == "http":
+                return redirect(url_for('website.protected', reason="insecure"))
+            elif url.scheme != "https":
+                return redirect(url_for('website.protected', reason="bad_protocol"))
+            else:
+                return f" {url.netloc} by {url.scheme}"
         else: abort(503)
     elif request.method == 'GET':
         return '<title>API</title><h1>For API usage, dummy!</h1>'

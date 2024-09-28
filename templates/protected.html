@@ -1,0 +1,14 @@
+
+{% if reason is not none %}
+  {% if reason == "insecure" %}
+  <h1>INSECURE</h1>
+  {% endif %}
+
+  {% if reason == "bad_protocol" %}
+  <h1>IS THE PROTOCOL CORRECT?</h1>
+  {% endif %}
+
+  {% if reason == "dangerous" %}
+  <h1>DANGEROUS WEBSITE!</h1>
+  {% endif %}
+{% endif %}
