@@ -1,4 +1,4 @@
 Flask
-sqlalchemy
+flask_sqlalchemy
 python-whois
 requests

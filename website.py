@@ -1,4 +1,6 @@
 from flask import Blueprint, abort, request, redirect, render_template, flash
+from models import db, SuspiciousUrl
+
 
 website_blueprint = Blueprint('website', __name__)
 
@@ -15,3 +17,13 @@ def protected(reason):
         return render_template('protected.html', reason=reason)
     else:
         return "AMOGUS"
+
+@website_blueprint.route("/suspicious_url", methods=["GET"])
+def suspicious_url():
+    res = "<ul>"
+    suslist = db.session.query(SuspiciousUrl).all()
+    for entry in suslist:
+        res.join(f"<li>URL: ${entry.url}, scare_factor: ${entry.evil_factor}</li>")
+
+    res.join("</ul>")
+    return res
