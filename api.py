@@ -4,7 +4,7 @@ from urllib.parse import urlparse, urlunparse
 import requests
 
 def check_url(url):
-    return True
+    return False
 
 api_blueprint = Blueprint('api', __name__)
 
