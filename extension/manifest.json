@@ -6,5 +6,10 @@
     "action": {
       "default_popup": "popup.html"
     },
-    "permissions": ["tabs"]
+    "permissions": ["tabs"],
+    "icons": {
+        "16": "aegis.png",
+        "48": "aegis.png",
+        "128": "aegis.png"
+    }
 }  
