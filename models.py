@@ -3,7 +3,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 import Levenshtein
 
-import os
+import os, codecs
 
 class Base(DeclarativeBase): pass
 
@@ -22,13 +22,10 @@ class SuspiciousUrl(db.Model):
     url: Mapped[str] = mapped_column(unique=True)
     evil_factor: Mapped[int] = mapped_column()
 
-#service_table = db.Table(
-#    sa.Column("provider_id", sa.ForeignKey(Service.id), primary_key=True),
-#    sa.Column("url_id", sa.ForeignKey(ServiceUrl.id), primary_key=True),
-#)
-
 def verify_url(url):
     url = url.replace("https://","")
+    clear = url.decode("utf-8")
+    url = clear.encode("ascii","ignore")
     vile_shit = ServiceUrl.query.all()
     results = []
     for contested_url in vile_shit:
