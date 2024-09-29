@@ -1,3 +1,3 @@
 # Subission for 2024's HackYeah hackaton.
 
-Generate secret using secrets.token_hex(16) and put it in instance/secrets.py as SECRET_KEY variable
+Generate secret using python's `secret` library by envoking `secrets.token_hex(32)` and set resulting token as SECRET_KEY variable in `instance/secrets.py`
