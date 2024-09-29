@@ -17,7 +17,7 @@ def api():
             url = urlparse(requested_url) # parse URL
             try:
                 with requests.get(requested_url) as r:
-                    assert r.status_code == 200:
+                    assert r.status_code == 200
             except: return "bad_protocol"
 
             if url.scheme == "": # if user has not specified the protocol
