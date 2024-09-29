@@ -10,6 +10,7 @@ from models import db, init_database
 app = Flask(__name__, instance_relative_config=True)
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/extension_api/*": {"origins": "*"}})
 
 app.register_blueprint(api_blueprint)
 app.register_blueprint(website_blueprint)
