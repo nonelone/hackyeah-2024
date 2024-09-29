@@ -15,6 +15,7 @@ document.getElementById('check-page').addEventListener('click', function() {
 //function sending current url to api and recive response as raw text
 function sendUrl(url) {
     //fetch data from api
+    replaceBody("templates/loading.html");
     fetch(api_url, {
         method: 'POST',
         headers: {
