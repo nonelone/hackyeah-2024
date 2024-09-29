@@ -17,7 +17,7 @@ Note that the app works in developement mode and **is not to be used in producti
 * Click the Load unpacked button.
 * Select the `extension` folder.
 
-### Mozilla Firefox
+### Mozilla Firefox (currently buggy)
 * Open Firefox.
 * In the address bar, type `about:debugging#/runtime/this-firefox` and press Enter
 * Click the Load Temporary Add-on button.
