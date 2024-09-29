@@ -33,10 +33,17 @@ Aegis Url Checker
             <div class="card-body">
                 <img src="{{url_for('static', filename='aegis.png')}}" class="card-img-top" style="max-width: 50%">
                 <h5 class="card-title">Aegis Url Checker</h5>
-                <form onsubmit="handleSubmit(event)">
-                    <input type="text" class="form-control" name="url" placeholder="Enter url" required>
-                    <button type="submit" class="btn btn-primary mt-2">Check</button>
-                </form>
+                <table>
+                    <td>
+                        <form onsubmit="handleSubmit(event)">
+                            <input type="text" class="form-control" name="url" placeholder="Enter url" required>
+                            <button type="submit" class="btn btn-primary mt-2">Check</button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <button onclick="window.location.href={{ url_for('home.extension') }}" type="submit" class="btn btn-secondary mt-2">Download Extension</button>
+                    </td>
             </div>
         </div>
     </div>
