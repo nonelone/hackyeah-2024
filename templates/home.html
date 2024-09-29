@@ -16,13 +16,13 @@ Aegis Url Checker
 
             const reason = await response.text();
             if (reason === 'insecure') {
-                window.location.href = "{{ url_for('home.protected') }}/insecure"
+                window.location.href = "{{ url_for('website.protected') }}/insecure"
             } else if (reason === 'bad_protocol') {
-                window.location.href = "{{ url_for('home.protected') }}/bad_protocol";
+                window.location.href = "{{ url_for('website.protected') }}/bad_protocol";
             } else if (reason === 'success') {
-                window.location.href = "{{ url_for('home.protected') }}/success";
+                window.location.href = "{{ url_for('website.protected') }}/success";
             } else {
-                window.location.href = "{{ url_for('home.protected') }}/danger";
+                window.location.href = "{{ url_for('website.protected') }}/danger";
             }
         }
 </script>
@@ -42,7 +42,7 @@ Aegis Url Checker
                     </td>
 
                     <td>
-                        <button onclick="window.location.href={{ url_for('home.extension') }}" type="submit" class="btn btn-secondary mt-2">Download Extension</button>
+                        <button onclick="window.location.href={{ url_for('website.extension') }}" type="submit" class="btn btn-secondary mt-2">Download Extension</button>
                     </td>
             </div>
         </div>

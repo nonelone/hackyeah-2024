@@ -28,3 +28,8 @@ def suspicious_url():
     res = "<ul>"
     suslist = db.session.query(SuspiciousUrl).order_by(SuspiciousUrl.evil_factor.desc()).all()
     return render_template("suspicious.html", suslist=suslist)
+
+
+@website_blueprint.route("/extension", methods=["GET"])
+def extension():
+    return "AAAAA"
