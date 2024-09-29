@@ -9,7 +9,8 @@
 Website should be avaliable on localhost on port 5000.  
 Note that the app works in developement mode and **is not to be used in production**
 
-## Installing exetension
+## Installing exetension  
+_Note: extension is currently bugged and might not work_
 ### Google Chrome / Chromium
 * Open Chrome.
 * In the address bar, type `chrome://extensions/` and hit Enter.
@@ -17,7 +18,7 @@ Note that the app works in developement mode and **is not to be used in producti
 * Click the Load unpacked button.
 * Select the `extension` folder.
 
-### Mozilla Firefox (currently buggy)
+### Mozilla Firefox
 * Open Firefox.
 * In the address bar, type `about:debugging#/runtime/this-firefox` and press Enter
 * Click the Load Temporary Add-on button.
