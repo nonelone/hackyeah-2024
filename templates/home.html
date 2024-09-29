@@ -4,40 +4,16 @@
 Aegis Url Checker
 {% endblock %}
 
-<script>
-    async function handleSubmit(event) {
-        event.preventDefault(); // Prevent the default form submission
-            
-            const formData = new FormData(event.target);
-            const response = await fetch('/api', {
-                method: 'POST',
-                body: formData
-            });
-
-            const reason = await response.text();
-            if (reason === 'insecure') {
-                window.location.href = "{{ url_for('website.protected') }}/insecure"
-            } else if (reason === 'bad_protocol') {
-                window.location.href = "{{ url_for('website.protected') }}/bad_protocol";
-            } else if (reason === 'success') {
-                window.location.href = "{{ url_for('website.protected') }}/success";
-            } else {
-                window.location.href = "{{ url_for('website.protected') }}/danger";
-            }
-        }
-</script>
-
 {% block body %}
         <div class="d-flex justify-content-center align-items-center" style="min-height: 50vh; height: fit-content;">
         <div class="card text-center" style="height: fit-content;">
             <div class="card-body">
                 <img src="{{url_for('static', filename='aegis.png')}}" class="card-img-top" style="max-width: 50%">
                 <h5 class="card-title">Aegis Url Checker</h5>
-                            <form onsubmit="handleSubmit(event)">
-                                <input type="text" class="form-control" name="url" placeholder="Enter url" required>
-                                <button type="submit" class="btn btn-primary mt-2">Check</button>
-                            </form>
-
+                <form method="POST" action="{{ url_for('api.api') }}">
+                    <input type="text" class="form-control" name="url" placeholder="Enter url">
+                    <button type="submit" class="btn btn-primary mt-2">Check</button>
+                </form>
             </div>
         </div>
     </div>

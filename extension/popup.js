@@ -1,6 +1,6 @@
 //Set variable holding url for api
 var base_url = "http://145.239.93.49:5000";
-var api_url = base_url + "/api";
+var api_url = base_url + "/extension_api";
 
 //give function to check-page button
 document.getElementById('check-page').addEventListener('click', function() {
