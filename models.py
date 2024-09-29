@@ -24,8 +24,11 @@ class SuspiciousUrl(db.Model):
 
 def verify_url(url):
     url = url.replace("https://","")
-    clear = url.decode("utf-8")
-    url = clear.encode("ascii","ignore")
+    try:
+        clear = bytes(url, 'utf-8').decode('ascii')
+        url = clear
+    except: return False
+    print(url)
     vile_shit = ServiceUrl.query.all()
     results = []
     for contested_url in vile_shit:

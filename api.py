@@ -9,7 +9,6 @@ from models import verify_url
 # register blueprint
 api_blueprint = Blueprint('api', __name__)
 
-
 @api_blueprint.route("/api", methods=["POST"])
 def api():
     if request.method == 'POST':
