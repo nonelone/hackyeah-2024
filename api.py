@@ -15,9 +15,10 @@ def api():
         if request.form['url'] is not None: # if method is POST and specifies `url`
             requested_url = request.form['url']
             url = urlparse(requested_url) # parse URL
-            with requests.get(requested_url) as r:
-                if r.status_code != 200:
-                    return "bad_protocol"
+            try:
+                with requests.get(requested_url) as r:
+                    assert r.status_code == 200:
+            except: return "bad_protocol"
 
             if url.scheme == "": # if user has not specified the protocol
                 url.scheme == "http" # assume its insecure and then try to connect to https
