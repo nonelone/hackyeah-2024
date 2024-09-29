@@ -38,7 +38,8 @@ def api():
         return '<title>API</title><h1>For API usage, dummy!</h1>'
     abort(403)
 
-def api():
+@api_blueprint.route("/extension_api", methods=["POST"])
+def extension_api():
     if request.method == 'POST':
         if request.form['url'] is not None: # if method is POST and specifies `url`
             requested_url = request.form['url']
