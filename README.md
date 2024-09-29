@@ -8,3 +8,18 @@
 
 Website should be avaliable on localhost on port 5000.  
 Note that the app works in developement mode and **is not to be used in production**
+
+# Installing exetension
+## Google Chrome / Chromium
+* Open Chrome.
+* In the address bar, type `chrome://extensions/` and hit Enter.
+* In the top right corner, toggle the switch for Developer mode to enable it.
+* Click the Load unpacked button.
+* Select the `extension` folder.
+
+## Mozilla Firefox
+* Open Firefox.
+* In the address bar, type `about:debugging#/runtime/this-firefox` and press Enter
+* Click the Load Temporary Add-on button.
+* Navigate to the folder `extension` containing extension’s files.
+* Select the manifest.json file.
